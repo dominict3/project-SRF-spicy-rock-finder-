@@ -1,0 +1,19 @@
+list of things I need to make
+
+NaI(Tl) Ø25 × 25 mm - https://www.shalomeo.com/cat_detail?path=24_286_292&.com
+SiPM, (Broadcom AFBR-S4N22P014M) - https://www.newark.com/broadcom/afbr-s4n22p014m/silicon-photomultiplier-2mm-2mm/dp/89AK1974?.com
+Optical coupling gel - https://a.co/d/0auZhI34
+Black/light-tight foam or gasket material - https://a.co/d/0gZK4c7h
+High-speed, low-input-bias TIA op-amp - https://www.digikey.com/en/products/detail/texas-instruments/OPA357AIDBVR/1572552
+Additional op-amp for shaping/gain - https://www.digikey.com/en/products/detail/texas-instruments/OPA355NA-250/390276
+Precision resistors, ~0.1% - buy later
+C0G/NP0 capacitors - buy later
+Other capacitors - amazon
+SMA/BNC/test connectors - own already 
+SiPM bias	~30 V low-noise adjustable bias supply - use adjustable temporarily
+Bias filtering components - look later
+Bleeder/discharge resistor - look later
+ESP32 - already owned
+Display - already owned
+microSD - need port
+PCB	Custom 4-layer PCB - make later
