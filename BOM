@@ -15,5 +15,7 @@ Bias filtering components - look later
 Bleeder/discharge resistor - look later
 ESP32 - already owned
 Display - already owned
+MCP3202 - makes ESP readable
 microSD - need port
 PCB	Custom 4-layer PCB - make later
+add temp sensor - find later
