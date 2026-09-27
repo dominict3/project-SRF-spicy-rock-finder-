@@ -1,0 +1,24 @@
+BOM maybye?
+
+Scintillator	CsI(Tl) 10×10×10mm	$30
+SiPM	onsemi MicroFC-60035-SMT-TR	$30
+Reflector wrap	PTFE tape around crystal (except SiPM face)	$5
+Optical coupling gel	(your original link is fine)	$8
+Light-tight gasket/foam	(your original link is fine)	$8
+TIA/shaping op-amp	OPA357AIDBVR	$3
+Fast comparator	TLV3201AIDBVR	$2
+Precision voltage reference	LM4040AIM3-3.0	$1
+SiPM bias DC-DC	MAX5026EUT + trimmer pot	$5
+Bias filtering	ferrite bead + caps	$3
+Bleeder resistor	1× through-hole, value TBD in layout	$1
+Precision resistor set	0.1% thin-film, shaping network	$12
+C0G/NP0 cap set	shaping/filter network	$8
+Peak-hold diodes	dual Schottky (e.g. BAT54S)	$2
+MCU	Raspberry Pi Pico 2 W	$8
+microSD breakout	pre-level-shifted module	$4
+Custom PCB (×5, 2-layer v1)	JLCPCB/PCBWay	$20
+LiPo battery + charger	small cell + TP4056 module	$12
+microSD card	any small capacity	$5
+Enclosure	3D-printed, your own design	$5 (filament)
+Misc hardware	standoffs, wire, connectors	$10
+Total		~$182
