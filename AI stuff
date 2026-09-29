@@ -1,0 +1,34 @@
+AI chats 
+
+Based on the Pomelo project details, here are the critical BOM fixes you must make before committing to KiCad:
+
+🔧 1. SiPM Part Number (MOST CRITICAL)
+❌ Incorrect: Generic "SiPM" or placeholder (e.g., "SiPM 10x10mm")
+✅ Fix: Broadcom AFBR-S4N44P014M
+Why: The project explicitly uses this exact model. Generic SiPMs will not work due to incompatible electrical characteristics (e.g., gain, noise, timing).
+Verification: Check if your BOM lists this exact part number (not "AFBR-S4N44P014" or similar variants).
+🔧 2. Scintillator Specification
+❌ Incorrect: "CsI" or "CsI Crystal" (missing doping)
+✅ Fix: CsI(Tl) crystal, 10mm x 10mm x 20mm
+Why: Thallium-doped (Tl) is essential for gamma spectroscopy. Pure CsI has poor light yield.
+Note: Do not list "CsI" alone—this is a common mistake that breaks calibration.
+🔧 3. Additional BOM Checks
+Component	Common Error	Correct Specification
+PCB Size	Listed in BOM (e.g., "5cm x 10cm")	Remove from BOM (BOM = components only)
+Calibration Sources	Included (e.g., "Am-241")	Remove (these are not part of the device)
+SiPM Manufacturer	"Avago" instead of "Broadcom"	Broadcom (Avago acquired Broadcom in 2015, but part numbers remain Broadcom)
+⚠️ Why These Fixes Matter
+Using the wrong SiPM (e.g., Hamamatsu S12647-010) will cause no signal or poor energy resolution.
+Listing "CsI" instead of "CsI(Tl)" will result in unusable calibration (no visible peaks for gamma lines).
+Including PCB size/calibration sources in the BOM will confuse manufacturers.
+🛠️ Before Committing to KiCad
+Verify SiPM part number in your BOM → AFBR-S4N44P014M.
+Replace "CsI" → "CsI(Tl) crystal, 10x10x20mm".
+Delete all non-component entries (PCB size, calibration sources, etc.).
+Cross-check with Broadcom's datasheet for part number validity.
+💡 Pro Tip: The project creator confirmed they use AFBR-S4N44P014M (not a generic SiPM), so your BOM must reflect this. Generic SiPMs are incompatible with the signal chain design.
+
+📌 Example Correct BOM Entry
+Designator	Part Number	Manufacturer	Description
+U1	AFBR-S4N44P014M	Broadcom	SiPM, 10x10mm, Tl-doped (CsI)
+D1	CsI(Tl) 10x10x20mm	Custom	Scintillator crystal
