@@ -1,22 +1,37 @@
 list of things I need to make
 
-Scintillator Crystal CsI(Tl) 10x10x10 mm - https://www.ebay.com/itm/157788691791
-SiPM, (Broadcom AFBR-S4N22P014M) - https://www.newark.com/broadcom/afbr-s4n22p014m/silicon-photomultiplier-2mm-2mm/dp/89AK1974?.com
-SiPM 6x6 - https://www.newark.com/broadcom/afbr-s4n66p014m/silicon-photomultiplier-1-ch-420nm/dp/82AK9811
-Optical coupling gel - https://a.co/d/0auZhI34
-Black/light-tight foam or gasket material - https://a.co/d/0gZK4c7h
-High-speed, low-input-bias TIA op-amp - https://www.digikey.com/en/products/detail/texas-instruments/OPA357AIDBVR/1572552
-Additional op-amp for shaping/gain - https://www.digikey.com/en/products/detail/texas-instruments/OPA355NA-250/390276
-Precision resistors, ~0.1% - buy later
-C0G/NP0 capacitors - buy later
-Other capacitors - amazon
-SMA/BNC/test connectors - own already 
-SiPM bias	~30 V low-noise adjustable bias supply - use adjustable temporarily
-Bias filtering components - look later
-Bleeder/discharge resistor - look later
-ESP32 - already owned
-Display - already owned
-MCP3202 - makes ESP readable
-microSD - need port
-PCB	Custom 4-layer PCB - make later
-add temp sensor - find later
+CsI(Tl) 10×10×10 mm, reflector included	$48
+MicroFC-60035-SMT-TR (not -TR1) from Mouser, LCSC or DigiKey	$24
+Silicone grease (PMX-200 or similar), black tape, Kapton	$12
+SiPM carrier PCB, 2-layer ×5, plus decoupling caps	$6
+Raspberry Pi Pico 2 (SC1631, plain, not W), Mouser 358-SC1631	$5
+Main PCB, 4-layer ×5 (get a quote)	$30
+Filament, screws, USB extension cable, tin-can shield	$12
+
+
+big name parts 
+
+3	U4, U7, U8	OPA357AIDBVR	C139385
+1	U1	TLV3201AIDBVR	C105188
+2	U2, U6	LM4040AIM3-3.0+T	C143326
+1	U5	MAX5026EUT+T	C87603
+1	L1	NRS4018T470MDGJ (47 µH)	C222886
+2	D1, D4	PMEG4010BEA,115	C36975
+2	D2, D3	BAT54S,215	C47546
+2	Q1, Q2	2N7002,215	C65189
+2	R2, R8	3296W-1-503LF (50 kΩ multiturn)	C83686
+7	R1, R4, R5, R7, R11, R12, R16	1 kΩ 0603, ARG03BTC1001	C309080
+3	R6, R10, R19	100 Ω 0603, 0603WAF1000T5E	C22775
+5	R9, R14, R15, R17, R21	210 kΩ 0603, TC0325D2103T5H	C517422
+3	R3, R13, R18	10 kΩ 0603, ARG03FTC1002	C217687
+4	C1, C5, C16, C17	4.7 µF 0805, CL21A475KBQNNNE	C98192
+6	C6, C10–C13, C15	22 µF 0603, CL10A226MP8NUNE	C86295
+6	C2, C3, C4, C7, C9, C14	100 nF 0603, CL10B104KC8NNNC	C15725
+1	C8	470 pF film, ECHU1C471JX5 (don't substitute)	C178419
+3	L2, L3, L4	BLM18KG102SN1D ferrite	C160982
+2	LED1, LED2	LTST-C190KGKT	C125094
+1	BUZZER1	MLT-7525	C95299
+1	SW1	TSC015A03526A	C2888900
+2	H3, H4	HJ-MCX009	C2904906
+1	H1	PM2.54-1*10 female header	C5116489
+1	H2	2.54-1*4P female header	C2718488
