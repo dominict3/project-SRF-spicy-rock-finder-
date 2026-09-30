@@ -1,0 +1,55 @@
+claude learned 9/29
+
+PROJECT BRIEF: CsI(Tl)+SiPM gamma spectrometer (OpenSiPM), based on Open Gamma Detector (OGD) Rev 4.2
+
+GOALS / CONSTRAINTS
+- First electronics project. Budget hard cap $200 (a simpler ~$100 build would be a bonus).
+- RadiaCode-style: counts per second/minute first, spectroscopy second, isotope ID a nice-to-have.
+- Simple to design in KiCad. I'm new to radiation, so explain plainly.
+- Plan: reproduce OGD Rev 4.2 analog values unchanged, with my own KiCad layout and a separate SiPM carrier board. Plain Pico 2, USB power for v1.
+- Later: NTC temperature logging, digital pots, Bluetooth, battery (+~$20).
+
+WHAT IT CAN DO
+- Gamma/X-ray spectrometer: pulse height -> keV histogram, peaks identify isotopes.
+- Alpha is stopped by the light-tight wrap and beta is mostly blocked, so no particle-type discrimination. A Geiger tube plus shielding tests is the alternative for that.
+- Fun tests: KCl salt substitute (K-40 1461 keV), uranium glass/Fiestaware (Bi-214 ~609 keV), smoke-detector Am-241 (59.5 keV, leave it sealed), granite vs wood background.
+- Limits: a 1 cm3 crystal is slow, resolution is ~8-10% typical, and it finds hot spots by rising counts, not direction.
+
+REV 4.2 FACTS (from schematic + BOM I was given)
+- Board 120x50 mm, 4-layer, "bias not temp corrected".
+- Bias: MAX5026 boost, V = 1.25*(1+(210k+Rpot)/10k) = 27.5-33.75 V. R2 (50k 3296W) is bias, R8 (50k 3296W) is threshold.
+- Optional R20 (~5k) gain pot: remove R7 and R11 first. Leave DNP in v1.
+- Chain: OPA357 preamp -> TLV3201 comparator (threshold pot + LM4040 ref) -> OPA357 peak-hold (BAT54S, 470 pF film C8, 2N7002 reset every 1 ms) -> Pico 2 ADC (LM4040-3.0 ref).
+- Extras: buzzer (2N7002 + PMEG4010BEA), button (toggles spectrum/Geiger mode and buzzer), ACT LED (use it to set the threshold), power LED, 2 MCX jacks, 4-pin SiPM header, 10-pin IO header.
+- Full BOM = 25 LCSC lines (~$17 excluding Pico).
+
+SIPM (MicroFC-60035-SMT-TR)
+- Same sensor as -TR1, but -TR is cheaper: Mouser ~$21, LCSC ~$28 vs ~$65-70 for -TR1 at Farnell/Newark/RS.
+- Breakdown ~24.2-24.7 V, overvoltage 1-5 V, so never exceed ~29.7 V. OGD uses ~29.6 V. Pot is ~0.25 V/turn if 25-turn.
+- Gain drifts -0.8%/C. 6x6 mm active area in a 7x7 mm package.
+- Footprint: solder pin 4, leave the center paddle unsoldered. Moisture-sensitive (MSL 3-4), so reflow it.
+
+CRYSTAL (biggest risk)
+- CsI(Tl) 10x10x10 mm with reflector: ~C$66 (~US$48) on eBay. Cheaper alternative: 30x7x3.8 mm bar, ~US$25, likely worse resolution.
+- OGD is tuned for NaI(Tl). CsI(Tl) emits ~540 nm (SiPM peaks at 420 nm) and decays ~1 us, ~4x slower than NaI.
+- Expect to retune firmware sample delay. I don't know PDE at 540 nm. Treat it as experimental.
+- Coupling: silicone grease. Wrap in black tape/Kapton, add a metal (tin can) shield.
+
+FINAL BOM (~$161 parts, ~$181 with shipping)
+CsI $48 | SiPM $24 | grease/tape $12 | carrier PCB+decoupling $6 | 25 LCSC lines + R20 + spares $24 | Pico 2 (SC1631) $5 | 4-layer PCB x5 $30 (get a quote) | case/filament/cable/shield $12. Battery/5V boost module +$20 (skip until v2).
+Extra: MCX pigtails ~$6-10 if shielded connection wanted.
+
+MISTAKES TO AVOID
+- The OpenGammaKit BOM (MAX1422 ADC, transformer, 2 digital pots, 1 OPA357) is a DIFFERENT design. Don't mix it with OGD. Its BOM also has errors (C20/C21 MPN mismatch, mangled BAT54S).
+- Use exact MPNs, not kits: 210k isn't an E24 value, and C8 must stay 470 pF film.
+- The plain Pico 2 is required. The Pico 2 W needs firmware changes and has no build.
+
+STARTUP PROCEDURE
+1. SiPM disconnected. 2. Power up, set bias to ~27.5-29 V, verify with a multimeter. 3. Power down, connect SiPM, recheck. 4. Set threshold with the ACT LED. 5. Raise bias only if needed, never past ~29.7 V.
+
+OPEN ITEMS
+- Confirm 4.7 uF (C1,C5,C16,C17) and 100 nF C2 voltage ratings on the ~30 V node.
+- Confirm the pots are 25-turn.
+- Get a 4-layer PCB quote.
+- Carrier-board temp-comp circuit not seen; use short leads in v1.
+- Still wanted: OGD firmware (sample delay), hardware README, carrier board schematic.
