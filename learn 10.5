@@ -1,31 +1,39 @@
-What I've learned
+PROJECT: OpenSiPM CsI(Tl)+SiPM gamma spectrometer. First electronics project; user has
+electrical knowledge and CAD skills. Budget hard cap $200, current design ~$125-135.
+Goals: counts/sec first, spectroscopy second, rough isotope ID nice-to-have. RadiaCode-style
+but not accuracy-critical. Rule: design must be fully finished before buying anything.
 
-The physics and the parts
+REFERENCE: Open Gamma Detector (OGD) Rev 4.2 analog design (MAX5026 bias, OPA357 preamp,
+peak-hold with BAT54 + 470 pF film C8, 2N7002 reset, TLV3201 comparator, Pico 2 ADC).
+Do NOT mix with the OpenGammaKit BOM (different design: MAX1422 ADC, transformer, digital pots).
 
-The detector is a CsI(Tl) crystal turning a gamma into a flash of light, and a SiPM turning that flash into a voltage pulse. Pulse height equals gamma energy, and a histogram of pulse heights is the spectrum.
-The same pairing is used by RadiaCode, so the concept works. Your uncertainty is the coupling: CsI(Tl) emits at ~540 nm, where the SiPM is less sensitive, and I don't know the exact margin. That decides your resolution.
-Alpha is blocked by the wrap and beta mostly is too, so you get no particle-type discrimination.
-The SiPM must never go above ~29.7 V. Its gain drifts ~0.8%/°C, so temperature is the main accuracy problem.
+FINAL ARCHITECTURE: SiPM -> OPA357 preamp/shaper -> OPA357 peak-hold -> Pico 2 ADC.
+Firmware threshold replaces the comparator: Pico polls the peak-hold (GP26), reads a few us
+after a crossing, pulses the 2N7002 to reset. GP27 = raw preamp tap, GP28 = NTC.
 
-Design decisions
+BOM: CsI(Tl) 10x10x10 mm + reflector (~$48), onsemi MicroFC-60035-SMT-TR (~$21-28),
+2x OPA357AIDBVR, adjustable >=35 V boost module + 2-stage RC filter on a header,
+BAT54, 2N7002 + 100R, 10k NTC (next to SiPM) + 10k 0.1% + 100 nF, 2 ferrite beads, 0603
+resistors/caps (OGD values; 470 pF film C8; >=50 V caps on the ~30 V node), 3 test pads,
+plain Pico 2 (not W) on sockets, 2-layer PCB, silicone grease, black tape/Kapton, tin shield,
+printed case. Power: USB for v1. Later: digital pots, Bluetooth, battery (+~$20).
 
-The OpenGammaKit BOM (MAX1422, transformer, digital pots) is a different design and shouldn't be mixed with OGD.
-A peak-hold circuit decouples pulse shape from ADC sampling speed. That's what makes dropping the comparator workable.
-Firmware thresholding removes parts and tuning but adds code risk. Keep the debug tap and test pads.
-A single 2-layer board is enough at µs speeds, and it cuts both fab cost and routing difficulty.
-Don't use a BAT54 on the boost output. The ADC reference, the NTC placement and the 50 V cap ratings are the details that bite if you miss them.
+KEY FACTS: SiPM breakdown ~24.2-24.7 V, operate ~27.5-29.6 V, NEVER above ~29.7 V.
+SiPM gain drifts -0.8%/C. CsI(Tl) emits ~540 nm (SiPM peaks ~420 nm) with ~1 us decay, so
+sample delay needs retuning vs the NaI-tuned OGD firmware. Don't use a BAT54 as the boost
+rectifier (30 V rating). Startup: SiPM disconnected, set bias, verify with multimeter, power
+down, connect SiPM, recheck.
 
-Open items before buying
+EXPECTATIONS (my estimates, unverified): resolution ~10-14% at 662 keV, ~8-10% best case;
+~1 cm3 crystal = slow stats; no alpha/beta discrimination; no temperature compensation in
+hardware (firmware correction via NTC + K-40 reference peak). Test sources: KCl salt (K-40
+1461 keV), uranium glass (Bi-214 609 keV), smoke detector Am-241 59.5 keV (keep sealed).
 
-Simulate the preamp and peak-hold in LTspice with onsemi's SiPM model.
-Confirm the voltage ratings on the 4.7 µF and 100 nF parts on the ~30 V node.
-Confirm the trimmer is 25-turn.
-Plan the crystal-over-SiPM mounting (10×10 crystal on a 7×7 package).
-Verify that the Pico 2's power-mode pin (GPIO23) can be set high to cut supply ripple on the analog side.
+ISOTOPE ID PLAN: 2-point keV calibration (Am-241 + K-40), smooth, peak-find, match against
+a small library (K-40, Cs-137, Co-60, Am-241, Ba-133, Na-22, Bi-214, Tl-208) with
+energy-scaled tolerance, score by fraction of lines matched, subtract a background run.
 
-What I can't tell you yet
-
-Real-world resolution. My ~10–14% estimate is a guess until it's built.
-The right firmware trigger delay for CsI(Tl)'s slower pulses.
-
-The next step is the firmware trigger loop, or I can turn this BOM into an .xlsx if you'd prefer that.
+OPEN ITEMS: LTspice sim of preamp + peak-hold with onsemi's SiPM model; confirm cap voltage
+ratings on the ~30 V node; verify Pico 2 GPIO23 power-mode pin; plan crystal-over-SiPM
+mounting (10x10 crystal, 7x7 SiPM package); write firmware trigger loop and a synthetic
+test spectrum. Prices and the PDE of the SiPM at 540 nm are not verified.
