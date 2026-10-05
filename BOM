@@ -107,3 +107,35 @@ Ferrite beads	1–2	Noise filtering	<$1
 2-layer PCB ×5	1	Main PCB	~$15
 Crystal coupling materials	—	Grease/tape/shield	~$10
 Enclosure	1	3D printed	~$5–10
+
+mk3
+
+CsI(Tl) 10×10×10 mm + reflector	1	Scintillator	48
+MicroFC-60035-SMT-TR	1	SiPM	21-28
+OPA357AIDBVR	2	Preamp + peak-hold	~5
+MAX5026	1	~28-30 V bias	~4
+47 µH inductor	1	Bias boost	~1
+40 V Schottky (PMEG4010BEA-class)	1	Bias rectifier	<1
+3296W 50 kΩ 25-turn	1	Bias adjust	~1.50
+BAT54 (single, SOT-23)	1	Peak-hold diode	<1
+2N7002 + 100 Ω resistor	1	Peak-hold reset	<1
+LM4040-3.0 + series resistor	1	ADC reference	~1
+10 kΩ NTC, B≈3950, 1%	1	SiPM temperature, next to the SiPM	<1
+10 kΩ 0.1% resistor	1	NTC divider	<0.10
+100 nF capacitor	1	NTC node filtering	<0.10
+0603/0805 resistors, 1%	~15	Analog circuitry (includes the 2-stage bias filter, 1-10 kΩ)	~2
+Capacitors	~15	Analog circuitry. 470 pF film for C8, ≥50 V on the ~30 V node	~3
+Ferrite beads	2	Analog supply and MAX5026 input isolation	<1
+Test pads: preamp out, peak-hold out, GND	3	Debugging	<1
+Pico 2 (plain) + 2×20 sockets	1	MCU	~7
+EC11 rotary encoder with pushbutton + knob cap	1	UI	~2
+OLED 1.3", 128×64, I2C	1	Display	~5-10
+Li-ion/LiPo 2000-3000 mAh, protected	1	Battery	~8-15
+1-cell charger/protection board (TP4056 + DW01 type)	1	Charging	~2-4
+5 V boost converter (≥1 A)	1	Battery → 5 V	~2-5
+Slide power switch	1	Main power	<1
+JST battery connector	1	Battery	<1
+Passive buzzer (optional)	1	Click and alarm	~1
+2-layer PCB ×5	1	Main PCB	~15
+Grease, tape/Kapton, tin shield		Crystal coupling	~10
+Enclosure, 3D printed	1	Case	~5-10
