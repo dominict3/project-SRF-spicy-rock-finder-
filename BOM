@@ -77,3 +77,33 @@ Test pads: preamp out (GP27), peak-hold out (GP26), GND	3	Debugging	<1
 Pico 2 (plain, not W) + 2×20 sockets	1	MCU	~6
 2-layer PCB ×5 (incl. shipping)			~15
 Grease, black tape/Kapton, tin shield, printed case			~20
+
+BOM 2.3
+
+CsI(Tl) 10×10×10 mm + reflector	1	Scintillator	$48
+MicroFC-60035-SMT-TR	1	SiPM	$21–28
+OPA357AIDBVR	2	Preamp + peak hold	~$5
+MAX5026	1	~28–30 V SiPM bias	~$4
+47 µH inductor	1	Bias boost	~$1
+40 V Schottky	1	Bias boost	<$1
+3296W 50 kΩ 25-turn	1	SiPM bias adjustment	~$1.50
+BAT54	1	Peak hold	<$1
+2N7002	1	Peak-hold reset	<$1
+LM4040-3.0	1	ADC reference	~$1
+10 kΩ NTC, B≈3950	1	SiPM temperature	<$1
+10 kΩ resistor	1	NTC divider	<$0.10
+100 nF NTC capacitor	1	ADC filtering	<$0.10
+0603/0805 resistors	~15	Analog circuitry	~$2
+Capacitors	~15	Analog circuitry	~$3
+Pico 2	1	MCU	~$6
+EC11 rotary encoder + pushbutton	1	UI	~$1–2
+OLED, ~1.3–1.5"	1	Display	~$5–10
+Li-ion/LiPo 2000–3000 mAh	1	Battery	~$8–15
+1-cell charger/protection	1	Battery charging	~$2–4
+5 V boost converter	1	Battery → 5 V	~$2–5
+Power switch	1	Main power	<$1
+Battery connector	1	Battery connection	<$1
+Ferrite beads	1–2	Noise filtering	<$1
+2-layer PCB ×5	1	Main PCB	~$15
+Crystal coupling materials	—	Grease/tape/shield	~$10
+Enclosure	1	3D printed	~$5–10
