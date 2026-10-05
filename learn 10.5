@@ -1,0 +1,31 @@
+What I've learned
+
+The physics and the parts
+
+The detector is a CsI(Tl) crystal turning a gamma into a flash of light, and a SiPM turning that flash into a voltage pulse. Pulse height equals gamma energy, and a histogram of pulse heights is the spectrum.
+The same pairing is used by RadiaCode, so the concept works. Your uncertainty is the coupling: CsI(Tl) emits at ~540 nm, where the SiPM is less sensitive, and I don't know the exact margin. That decides your resolution.
+Alpha is blocked by the wrap and beta mostly is too, so you get no particle-type discrimination.
+The SiPM must never go above ~29.7 V. Its gain drifts ~0.8%/°C, so temperature is the main accuracy problem.
+
+Design decisions
+
+The OpenGammaKit BOM (MAX1422, transformer, digital pots) is a different design and shouldn't be mixed with OGD.
+A peak-hold circuit decouples pulse shape from ADC sampling speed. That's what makes dropping the comparator workable.
+Firmware thresholding removes parts and tuning but adds code risk. Keep the debug tap and test pads.
+A single 2-layer board is enough at µs speeds, and it cuts both fab cost and routing difficulty.
+Don't use a BAT54 on the boost output. The ADC reference, the NTC placement and the 50 V cap ratings are the details that bite if you miss them.
+
+Open items before buying
+
+Simulate the preamp and peak-hold in LTspice with onsemi's SiPM model.
+Confirm the voltage ratings on the 4.7 µF and 100 nF parts on the ~30 V node.
+Confirm the trimmer is 25-turn.
+Plan the crystal-over-SiPM mounting (10×10 crystal on a 7×7 package).
+Verify that the Pico 2's power-mode pin (GPIO23) can be set high to cut supply ripple on the analog side.
+
+What I can't tell you yet
+
+Real-world resolution. My ~10–14% estimate is a guess until it's built.
+The right firmware trigger delay for CsI(Tl)'s slower pulses.
+
+The next step is the firmware trigger loop, or I can turn this BOM into an .xlsx if you'd prefer that.
