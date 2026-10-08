@@ -1,0 +1,69 @@
+The wiring below is in the same style as the carrier board, with variables. I haven't seen the OGD main-board schematic, so I can't give you real values for the preamp, the peak-hold or the bias boost. I'm not going to invent them again. Each item carries a tag:
+
+- **[KNOWN]**: from your notes or BOM
+- **[OGD]**: copy it from the OGD main-board schematic
+- **[DATASHEET]**: I can work it out once I see the part's datasheet page
+- **[CHOOSE]**: my suggested starting value, which you can change
+
+Three BOM changes, because the carrier board replaced some of it:
+- The 2-stage bias filter is now on the carrier (R1, R2 = 49.9 Ω, C1–C3 = 100 nF). Remove the "1–10 kΩ" filter from the main board.
+- The NTC, the 10 kΩ 0.1% resistor and the 100 nF NTC filter are gone, and GP28 is free.
+- Your earlier notes said "boost module", but the latest BOM has the discrete MAX5026. I've used the MAX5026.
+
+## Block A: Power
+- `+5V` source: USB through the Pico, or the off-board boost module on header `J_PWR`. Put a Schottky `D_pwr` [CHOOSE, 1N5819 or SS14 class] from the module's `+5V` into Pico VSYS (pin 39), so the module never back-feeds USB.
+- Pico `3V3` (pin 36) → `FB1` → net `+3V3A`. `FB1` is one ferrite bead [CHOOSE, 0603, ~600 Ω at 100 MHz, ≥500 mA].
+- `+3V3A` → `C_a1` (100 nF) → GND, and `+3V3A` → `C_a2` (10 µF) → GND.
+- The OLED takes power from the plain Pico `3V3`, not from `+3V3A`, so its I2C noise stays off the analog rail.
+
+## Block B: Bias boost (U3 = MAX5026)
+- `+5V` → `FB2` (ferrite bead, second one from the BOM) → net `+5V_B`
+- `+5V_B` → `C_in1` (10 µF) → GND, and `+5V_B` → `C_in2` (100 nF) → GND [CHOOSE]
+- `+5V_B` → `L1` (47 µH) → switch node `LX`
+- `LX` → `D2` (PMEG4010BEA, anode at `LX`) → net `VOUT_RAW`
+- `VOUT_RAW` → `C_out` (≥50 V rating; value [DATASHEET]) → GND
+- `VOUT_RAW` → `R_top` → `FB` pin → `RV1` (3296W 50 kΩ) and `R_bot` → GND
+- `VOUT_RAW` → `BIAS` pin on `J_SIPM` and test pad `TP4`
+- Pin-by-pin connections (EN/SHDN, COMP, any compensation parts): [DATASHEET]. These are in the MAX5026 typical application circuit.
+- `R_top`, `R_bot`, `RV1` placement and values: [OGD]. The formula is `Vout = Vfb × (1 + R_top / (R_bot + RV1 section))`, with `Vfb` from the datasheet.
+- Safety design: choose the divider so the pot's end stop cannot exceed 29.7 V. Then a mis-turned pot can't destroy the SiPM. I'll compute this when I have `Vfb` and the OGD values.
+
+## Block C: Preamp (U1 = OPA357)
+- `J_SIPM` `ANODE` pin → `U1` input network [OGD]: `Rin1` (if any), `Rf1`, `Cf1`, and the `IN+` reference `Vref1`
+- `U1` V+ → `+3V3A`, V− → GND, with `C_u1a` (100 nF) and `C_u1b` (1 µF) at the pin [CHOOSE]
+- `U1` ENABLE → V+ (check the pin on the OPA357 datasheet)
+- `U1` OUT → net `PREAMP` → `TP1` (test pad) and → `U2` input [OGD]
+- `PREAMP` → `R_p` (1 kΩ [CHOOSE], optional) → Pico GP27 (pin 32) as the raw tap
+
+## Block D: Peak-hold (U2 = OPA357)
+- `U2` input from `PREAMP` [OGD: any coupling cap or resistor, and the gain]
+- `U2` OUT → `D1` (BAT54, anode at `U2` OUT) → net `HOLD`
+- `HOLD` → `C8` (470 pF film) → GND [KNOWN]
+- `HOLD` → `U2` IN− (feedback, so the diode drop cancels) [OGD: check any series resistor]
+- `HOLD` → `TP2` (test pad) and → Pico GP26 (pin 31, ADC0)
+- Reset: `HOLD` → `R_rst` (100 Ω) → `Q1` (2N7002) drain; `Q1` source → GND [KNOWN: BOM says 100 Ω, but I don't know whether the OGD puts it on the drain or the gate]
+- `Q1` gate ← Pico GP15 (pin 20) [CHOOSE], plus `R_gate` (100 kΩ) from gate to GND [CHOOSE], so the gate doesn't float at boot
+- `U2` supply and decoupling: same as `U1`
+
+## Block E: ADC reference
+- `+5V` → `R_ref` → net `VREF`; `VREF` → LM4040-3.0 cathode; LM4040 anode → GND [KNOWN: parts]
+- `VREF` → `C_ref` (100 nF [CHOOSE]) → GND, and `VREF` → Pico ADC_VREF (pin 35)
+- Pico AGND (pin 33) → GND (analog ground return)
+- `R_ref` [DATASHEET]: `R_ref = (V5_min − 3.0 V) / (I_4040_min + I_pico_load)`. Check two things first: the LM4040's minimum current, and what the Pico 2's on-board ADC_VREF resistor draws from your reference when you drive that pin with 3.0 V. I don't have either number, so I won't guess.
+
+## Block F: Pico, UI and connectors
+Pico on 2×20 sockets, pin numbers as printed on the board:
+- GP4 (pin 6) → OLED SDA, GP5 (pin 7) → OLED SCL [CHOOSE]. Add `R_i2c` (4.7 kΩ) to 3V3 on each line if the OLED module has no pull-ups.
+- GP10 (pin 14) → EC11 A, GP11 (pin 15) → EC11 B, GP12 (pin 16) → switch, common to GND [CHOOSE]; optional 100 nF at each
+- GP14 (pin 19) → buzzer (+), buzzer (−) → GND [CHOOSE]
+- `J_SIPM` (3 pads, same order as the carrier): `BIAS`, `GND`, `ANODE`
+- `J_PWR`: `+5V`, `GND`
+- Test pads: `TP1` PREAMP, `TP2` HOLD, `TP3` GND, `TP4` BIAS
+
+## What I need from you
+Screenshots of:
+1. The OGD main-board preamp and peak-hold section (fills in Block C and D values).
+2. The OGD bias-boost section, or the MAX5026 datasheet's typical application circuit (Block B).
+3. The LM4040 datasheet's current table and the Pico 2 ADC_VREF section (Block E).
+
+Once I have those I'll replace every [OGD] and [DATASHEET] tag with real numbers and check the polarity of the preamp stage against the peak-hold diode direction.
