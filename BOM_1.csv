@@ -1,25 +1,25 @@
 Category,Refs,Qty,Value,Part,Package,Notes
 Board - IC,U1,1,Raspberry Pi Pico 2 (not W),Raspberry Pi Pico 2,Module,
-Board - IC,U1 sockets,1 pair,20-pin female header,2.54mm,,Two 20-pin strips
+Board - IC,U1 sockets,2,20-pin female header,1x20 Female Header,2.54mm,Two 20-pin strips
 Board - IC,U2,1,MAX5026,MAX5026EUT+T,SOT-23-6,SiPM bias boost
 Board - IC,U3,1,TPS7B6950,TPS7B6950DBVR,SOT-23-5,Temp-comp 5V regulator
-Board - IC,Q5 Q9 Q10,3,OPA354,OPA354AIDBVR,SOT-23-5,Peak-hold and preamp (not OPA357)
+Board - IC,"Q5, Q9, Q10",3,OPA354,OPA354AIDBVR,SOT-23-5,Peak-hold and preamp (not OPA357)
 Board - IC,Q6,1,TLV3201,TLV3201AIDBVR,SOT-23-5,Comparator
 Board - IC,Q7,1,LM4040-3.0,LM4040AIM3-3.0,SOT-23-3,Verify pinout vs datasheet
-Board - Transistor,Q1 Q2,2,MMBT5088,MMBT5088LT1G,SOT-23,Temp-comp
+Board - Transistor,"Q1, Q2",2,MMBT5088,MMBT5088LT1G,SOT-23,Temp-comp
 Board - Transistor,Q8,1,2N7002,2N7002,SOT-23,Reset switch
 Board - Diode,D1,1,B0540W,B0540W,SOD-123,40V Schottky boost catch
-Board - Diode,D2 D3,2,BAT54WS,BAT54WS,SOD-323,Peak-hold Schottky (not 1N4148)
-Board - Diode,D5 D6,2,BAT54S,BAT54S,SOT-23,Pico ADC clamp
+Board - Diode,"D2, D3",2,BAT54WS,BAT54WS,SOD-323,Peak-hold Schottky (not 1N4148)
+Board - Diode,"D5, D6",2,BAT54S,BAT54S,SOT-23,Pico ADC clamp
 Board - Diode,D7,1,B5819W,B5819W,SOD-123,VBUS to +5V
 Board - Diode,D4,1,LED 0603,LED,0603,Tuning LED
 Board - Inductor,L1,1,47uH,A915BY-470M=P3,Inductor,Boost inductor
-Board - Resistor 1%,R3 R7 R9 R17 L2 R_PZ1 R_PZ2,7,100R,,0603,L2 is 100R replacing inductor; R_PZ = piezo series
-Board - Resistor 1%,R8 R12 R15 R16 R19 R20,6,1k,,0603,
+Board - Resistor 1%,"R3, R7, R9, R17, L2, R_PZ1, R_PZ2",7,100R,,0603,L2 is 100R replacing inductor; R_PZ = piezo series
+Board - Resistor 1%,"R8, R12, R15, R16, R19, R20",6,1k,,0603,
 Board - Resistor 1%,R10,1,2.2k,,0603,Preamp gain (changed from 1k)
-Board - Resistor 1%,R5 R6,2,49.9k,,0603,
+Board - Resistor 1%,"R5, R6",2,49.9k,,0603,
 Board - Resistor 1%,R4,1,49.9k or 30.1k,,0603,Decide (sim suggests 30.1k)
-Board - Resistor 1%,R13 R14,2,210k,,0603,
+Board - Resistor 1%,"R13, R14",2,210k,,0603,
 Board - Resistor 1%,R18,1,100k,,0603,
 Board - Resistor 1%,R11,1,4.7k,,0603,
 Board - Resistor 1%,R1,1,6.34k,,0603,Boost feedback
@@ -32,23 +32,23 @@ Board - Thermistor,TH1,1,10k NTC,NTCS0603E3103FLT,0603,Check B-value
 Board - SiPM,C8,1,MICROFC-60035-SMT-TR,MICROFC-60035-SMT-TR,SiPM footprint,
 Board - Cap,C10,1,10nF C0G 50V,,0603,Hold cap
 Board - Cap,C9,1,10pF C0G,,0603,
-Board - Cap,C11 C13 C14 C16 C17,5,100nF,,0603,
+Board - Cap,"C11, C13, C14, C16, C17",5,100nF,,0603,
 Board - Cap,C18,1,100nF,,0603,ADC_VREF decoupling (new - check PCB)
-Board - Cap,C2 C3,2,1uF 50V,,0805,HV
+Board - Cap,"C2, C3",2,1uF 50V,,0805,HV
 Board - Cap,C4,1,2.2uF 50V,,0805,HV
 Board - Cap,C5,1,2.2uF 10V,,0805,Kept from Open Gamma
 Board - Cap,C1,1,4.7uF 10V,,0805,
-Board - Cap,C6 C7,2,10uF 50V X7R,,1210,HV filter
-Board - Cap,C12 C15,2,10uF 10V,,0805,
+Board - Cap,"C6, C7",2,10uF 50V X7R,,1210,HV filter
+Board - Cap,"C12, C15",2,10uF 10V,,0805,
 Board - Switch,SW1,1,EC11 encoder with switch,EC11,,UI
 Board - Header,J1,1,2-pin header,,2.54mm,5V in (check polarity)
 Board - Header,J2,1,2-pin header,,2.54mm,Piezo connector
 Board - Header,J10,1,4-pin header,,2.54mm,OLED
 Board - Header,J_BAT,1,2-pin JST-PH,,JST-PH,Battery input (new)
 Board - Jumper,JP1,1,Solder jumper,,,
-Extra - Power,Battery,1,1-cell LiPo 2000-3000 mAh,Thin flat LiPo,,,Shape constrained
-Extra - Power,Charger module,1,1-cell charger with protection,TP4056 + DW01/FS8205 module,,Input from USB, output to battery
-Extra - Power,5V boost,1,Li-ion to 5V boost module,Step-up module (5V out),,Output to +5V rail (ESP / OLED / rest)
+Extra - Power,Battery,1,1-cell LiPo 2000-3000 mAh,Thin flat LiPo,,Shape constrained
+Extra - Power,Charger module,1,1-cell charger with protection,TP4056 + DW01/FS8205 module,,Input from USB; output to battery
+Extra - Power,5V boost,1,Li-ion to 5V boost module,Step-up module (5V out),,Output to +5V rail (Pico / OLED / rest)
 Extra - Power,Power switch,1,Slide switch,SPDT slide,,Battery to boost
 Extra - Power,Battery cable,1,JST-PH 2-pin pair,,JST-PH,
 Extra - Sensor,CsI(Tl) crystal,1,10x10x10 mm,CsI(Tl),,Off-board
