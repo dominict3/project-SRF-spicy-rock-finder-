@@ -1,0 +1,72 @@
+Refs,Qty,Value,Part,Package,Notes
+U1,1,Raspberry Pi Pico 2,Raspberry Pi Pico 2 (not W),Module,Plus 2x 20-pin female headers
+U2,1,MAX5026,MAX5026EUT+T,SOT-23-6,SiPM bias boost
+U3,1,TPS7B6950,TPS7B6950DBVR,SOT-23-5,Temp-comp 5V regulator
+Q1,1,MMBT5088,MMBT5088LT1G,SOT-23,
+Q2,1,MMBT5088,MMBT5088LT1G,SOT-23,
+Q5,1,OPA354,OPA354AIDBVR,SOT-23-5,Peak-hold buffer (not OPA357)
+Q6,1,TLV3201,TLV3201AIDBVR,SOT-23-5,Comparator
+Q7,1,LM4040-3.0,LM4040AIM3-3.0,SOT-23-3,Verify pinout vs datasheet
+Q8,1,2N7002,2N7002,SOT-23,Reset switch
+Q9,1,OPA354,OPA354AIDBVR,SOT-23-5,Peak-hold stage (not OPA357)
+Q10,1,OPA354,OPA354AIDBVR,SOT-23-5,Preamp (not OPA357)
+D1,1,40V Schottky,B0540W,SOD-123,Boost catch diode
+D2,1,BAT54WS,BAT54WS,SOD-323,Peak-hold diode (Schottky)
+D3,1,BAT54WS,BAT54WS,SOD-323,Peak-hold diode (Schottky)
+D4,1,LED,LED 0603,0603,Tuning LED
+D5,1,BAT54S,BAT54S,SOT-23,Pico ADC clamp
+D6,1,BAT54S,BAT54S,SOT-23,Pico ADC clamp
+D7,1,Schottky,B5819W,SOD-123,VBUS to +5V
+L1,1,47uH,A915BY-470M=P3,Inductor,Boost inductor
+L2,1,100 ohm,100R 0603,0603,Resistor replaces inductor
+C1,1,4.7uF 10V,,0805,
+C2,1,1uF 50V,,0805,HV
+C3,1,1uF 50V,,0805,HV
+C4,1,2.2uF 50V,,0805,HV
+C5,1,2.2uF 10V,,0805,Taken from Open Gamma; check
+C6,1,10uF 50V X7R,,1210,HV filter
+C7,1,10uF 50V X7R,,1210,HV filter
+C8,1,MICROFC-60035-SMT-TR,MicroFC-60035-SMT-TR,SiPM,
+C9,1,10pF C0G,,0603,
+C10,1,10nF C0G 50V,,0603,Hold cap
+C11,1,100nF,,0603,
+C12,1,10uF 10V,,0805,
+C13,1,100nF,,0603,
+C14,1,100nF,,0603,
+C15,1,10uF 10V,,0805,
+C16,1,100nF,,0603,
+C17,1,100nF,,0603,
+C18,1,100nF,,0603,ADC_VREF decoupling (new)
+R1,1,6.34k 1%,,0603,Boost feedback
+R2,1,50k,Bourns 3296W-1-503,3296W,Threshold pot (RV2 in sims)
+R3,1,100R 1%,,0603,
+R4,1,49.9k 1%,,0603,Set to 30.1k per sim review
+R5,1,49.9k 1%,,0603,
+R6,1,49.9k 1%,,0603,
+R7,1,100R 1%,,0603,
+R8,1,1k 1%,,0603,
+R9,1,100R 1%,,0603,
+R10,1,2.2k 1%,,0603,Preamp gain (changed from 1k)
+R11,1,4.7k 1%,,0603,
+R12,1,1k 1%,,0603,
+R13,1,210k 1%,,0603,
+R14,1,210k 1%,,0603,
+R15,1,1k 1%,,0603,
+R16,1,1k 1%,,0603,
+R17,1,100R 1%,,0603,
+R18,1,100k 1%,,0603,
+R19,1,1k 1%,,0603,
+R20,1,1k 1%,,0603,
+R21,1,124k 1%,,0603,Boost top resistor
+R22,1,4.7R 1%,,0603,Filter ahead of preamp rail
+RV1,1,20k,Bourns 3296W-1-203,3296W,Boost trim (series with R21)
+RV2,1,200R,Bourns 3296W-1-201,3296W,Sense trim (RV3 in sims)
+TH1,1,10k NTC,NTCS0603E3103FLT,0603,Check B-value (3610 placeholder)
+SW1,1,EC11,EC11 with switch,Rotary encoder,UI
+J1,1,2-pin header,,2.54mm,5V power in (check polarity)
+J2,1,2-pin header,,2.54mm,Piezo or aux
+JP1,1,Solder jumper,,,Optional
+OLED,1,1.3-1.5in OLED,,4-pin header,SDA/SCL/3V3/GND
+PIEZO,1,12mm passive piezo,,Off-board,Connect via 2-pin header
+R_PZ1,1,100R 1%,,0603,Piezo series
+R_PZ2,1,100R 1%,,0603,Piezo series
