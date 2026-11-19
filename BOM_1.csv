@@ -46,7 +46,7 @@ Board - Header,J2,1,2-pin header,,2.54mm,Piezo connector
 Board - Header,J10,1,4-pin header,,2.54mm,OLED
 Board - Header,J_BAT,1,2-pin JST-PH,,JST-PH,Battery input (new)
 Board - Jumper,JP1,1,Solder jumper,,,
-Extra - Power,Battery,1,1-cell LiPo 2000-3000 mAh,Thin flat LiPo,,Shape constrained
+Extra - Power,Battery,1,1-cell LiPo 2000-3000 mAh,Thin flat LiPo,Shape constrained
 Extra - Power,Charger module,1,1-cell charger with protection,TP4056 + DW01/FS8205 module,,Input from USB, output to battery
 Extra - Power,5V boost,1,Li-ion to 5V boost module,Step-up module (5V out),,Output to +5V rail (ESP / OLED / rest)
 Extra - Power,Power switch,1,Slide switch,SPDT slide,,Battery to boost
